@@ -32,7 +32,16 @@ function getDogBreeds(){
             const breeds = Object.keys(data.message);
             //console.log(breeds);
             breeds.forEach(breed => {
-                ul.innerHTML += `<li>${breed}</li>`
+                let li = document.createElement('li');
+                li.innerHTML = breed;
+                ul.appendChild(li);
+                li.addEventListener("click", changeFontColor);
             })
         });
+}
+
+//Challenge 3
+function changeFontColor(e){
+    console.log(e.target);
+    e.target.style.color = 'skyblue';
 }
