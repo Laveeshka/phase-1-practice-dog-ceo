@@ -2,10 +2,12 @@ console.log('%c HI', 'color: firebrick')
 
 
 document.addEventListener("DOMContentLoaded", doWork);
+let breeds = [];
 
 function doWork(){
     getDogImages();
     getDogBreeds();
+    filterBreeds();
 }
 
 //Challenge 1
@@ -29,7 +31,8 @@ function getDogBreeds(){
         .then(res => res.json())
         .then(data => {
             //console.log(data.message);
-            const breeds = Object.keys(data.message);
+            breeds = Object.keys(data.message);
+            Object.keys(data.message).forEach(key => breeds.push(key));
             //console.log(breeds);
             breeds.forEach(breed => {
                 let li = document.createElement('li');
@@ -40,8 +43,33 @@ function getDogBreeds(){
         });
 }
 
+
+
+
 //Challenge 3
 function changeFontColor(e){
-    console.log(e.target);
+    //console.log(e.target);
     e.target.style.color = 'skyblue';
+}
+
+//Challenge 4
+function filterBreeds(){
+    const dropdown = document.querySelector("#breed-dropdown");
+    dropdown.addEventListener("change", filterBreedsByStartingLetter);
+}
+
+function filterBreedsByStartingLetter(e){
+    console.log(e.target.value);
+    //remove all li elements
+    let ul = document.querySelector("#dog-breeds");
+    ul.innerHTML = '';
+    console.log(breeds);
+    let filteredBreeds = breeds.filter(breed => breed.startsWith(e.target.value));
+    console.log(filteredBreeds);
+    filteredBreeds.forEach(filteredBreed => {
+        let li = document.createElement('li');
+        li.innerHTML = filteredBreed;
+        ul.appendChild(li);
+        li.addEventListener("click", changeFontColor);
+    })
 }
