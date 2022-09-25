@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", doWork);
 
 function doWork(){
     getDogImages();
+    getDogBreeds();
 }
 
 //Challenge 1
@@ -20,3 +21,18 @@ function getDogImages(){
         });
 }
 
+//Challenge 2
+function getDogBreeds(){
+    const breedUrl = 'https://dog.ceo/api/breeds/list/all';
+    let ul = document.querySelector("#dog-breeds");
+    fetch(breedUrl)
+        .then(res => res.json())
+        .then(data => {
+            //console.log(data.message);
+            const breeds = Object.keys(data.message);
+            //console.log(breeds);
+            breeds.forEach(breed => {
+                ul.innerHTML += `<li>${breed}</li>`
+            })
+        });
+}
